@@ -2,29 +2,29 @@ name: Build APK
 
 on:
   push:
-    branches: [ "principal", "main" ]
+    branches: [ "main" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-  - name: Install dependencies
-  run: |
-    sudo apt update
-    sudo apt install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev
-    pip install --upgrade pip
-    pip install cython
-    pip install buildozer
-    
-    - name: Build APK
-      run: |
-        buildozer init || true
-        buildozer -v android debug
+      - uses: actions/checkout@v3
 
-    - name: Upload APK
-      uses: actions/upload-artifact@v4
-      with:
-        name: packkeke-apk
-        path: bin/*.apk
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev
+          pip install --upgrade pip
+          pip install cython
+          pip install buildozer
+
+      - name: Build APK
+        run: |
+          buildozer -v android debug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: packkeke-apk
+          path: bin/*.apk
